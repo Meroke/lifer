@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#80CCCCCC" /> <!-- 灰色透明背景，#80表示透明度为50% -->
+    <corners android:radius="30dp" /> <!-- 四个圆角，半径为8dp，可根据需要进行调整 -->
+</shape>

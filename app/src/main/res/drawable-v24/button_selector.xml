@@ -1,0 +1,43 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"> <!-- 当按钮被按下时 -->
+        <shape android:shape="rectangle"> <!-- 矩形形状 -->
+            <gradient
+                android:startColor="#DDDDDD"
+                android:endColor="#AAAAAA"
+                android:angle="270" />
+            <solid android:color="#DDDDDD"/> <!-- 填充颜色为浅灰色 -->
+            <corners android:radius="15dp"/> <!-- 圆角半径为15dp -->
+            <padding android:top="8dp" android:right="8dp" android:bottom="8dp" android:left="8dp"/> <!-- 上右下左内边距分别为8dp -->
+            <size android:height="48dp" android:width="120dp"/> <!-- 高度为48dp，宽度为120dp -->
+            <shadow
+                android:shadowColor="#333333"
+                android:shadowRadius="10" />
+        </shape>
+    </item>
+    <item> <!-- 按钮未被按下时 -->
+        <layer-list> <!-- 图层列表 -->
+            <item> <!-- 第一层 -->
+                <shape android:shape="rectangle"> <!-- 矩形形状 -->
+                    <solid android:color="#FFFFFF"/> <!-- 填充颜色为白色 -->
+                    <corners android:radius="15dp"/> <!-- 圆角半径为15dp -->
+                    <padding android:top="8dp" android:right="8dp" android:bottom="8dp" android:left="8dp"/> <!-- 上右下左内边距分别为8dp -->
+                    <size android:height="48dp" android:width="120dp"/> <!-- 高度为48dp，宽度为120dp -->
+                </shape>
+            </item>
+            <item android:right="4dp" android:bottom="4dp"> <!-- 第二层，右下偏移2dp -->
+                <shape android:shape="rectangle"> <!-- 矩形形状 -->
+                    <solid android:color="#BDBDBD"/> <!-- 填充颜色为灰色 -->
+                    <corners android:radius="15dp"/> <!-- 圆角半径为15dp -->
+                    <size android:height="48dp" android:width="120dp"/> <!-- 高度为48dp，宽度为120dp -->
+                </shape>
+            </item>
+            <item android:left="2dp" android:top="2dp"> <!-- 第三层，左上偏移2dp -->
+                <shape android:shape="rectangle"> <!-- 矩形形状 -->
+                    <solid android:color="#ADD8E6"/> <!-- 填充颜色为白色 -->
+                    <corners android:radius="15dp"/> <!-- 圆角半径为15dp -->
+                    <size android:height="48dp" android:width="120dp"/> <!-- 高度为48dp，宽度为120dp -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>
