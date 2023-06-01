@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifer.R;
+import com.example.lifer.clock.ClockMainActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button musicButton;
     private Button weatherButton;
     private Button newsBUtton;
+    private Button clockButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         musicButton = findViewById(R.id.btn_music);
         weatherButton = findViewById(R.id.btn_weather);
         newsBUtton = findViewById(R.id.btn_news);
+        clockButton = findViewById(R.id.btn_clock);
         calculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 onNewsButtonClick();
             }
         });
+
+        clockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle music button click
+                onClockButtonClick();
+            }
+        });
     }
 
     private void onCalculatorButtonClick() {
@@ -89,4 +100,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, NewsActivity.class);
         startActivity(intent);
     }
+    private void onClockButtonClick() {
+        Intent intent = new Intent(MainActivity.this, ClockMainActivity.class);
+        startActivity(intent);
+    }
+
 }

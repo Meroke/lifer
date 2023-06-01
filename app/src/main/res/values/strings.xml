@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">lifer</string>
+    <string name="cancel">拒绝</string>
+    <string name="submit">同意</string>
+    <string name="perDialog">""</string>
 </resources>

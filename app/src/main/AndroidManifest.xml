@@ -6,6 +6,15 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- 振动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -26,5 +35,25 @@
         <activity android:name=".activities.MusicActivity" />
         <activity android:name=".activities.WeatherActivity" />
         <activity android:name=".activities.NewsActivity" />
+
+<!--        clock-->
+        <activity android:name=".clock.ClockMainActivity" />
+        <activity android:name=".clock.ClockActivity" />
+        <activity android:name=".clock.AddclockActivity" />
+        <!-- 注册服务 process:将service放在独立的进程中 -->
+        <service
+            android:name=".clock.ClockService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":ClockService" />
+        <!-- 注册广播 -->
+        <receiver
+            android:name=".clock.ClockReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".clock.SandglassActivity" />
+        <activity android:name=".clock.StopwatchActivity"></activity>
     </application>
 </manifest>
