@@ -1,6 +1,14 @@
 package com.example.lifer.activities;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +41,16 @@ import java.util.List;
 public class WeatherActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private WeatherCardAdapter adapter;
-    private List<WeatherCard> weatherCards;
 
+    private Spinner citySpinner;
+    private List<String> cities;
+    private ArrayAdapter<String> spinnerAdapter;
+    private WeatherCardAdapter adapter;
+
+    private List<WeatherCard> weatherCards;
+    private EditText location;
     private static final String API_KEY = "S3ajJ9HXNXvzV5SzW";
-    private static final String LOCATION = "ningbo";
+    private  String LOCATION = "ningbo";
     private static final String LANGUAGE = "zh-Hans";
     private static final String UNIT = "c";
     private static final int DAYS = 5;
@@ -46,12 +63,73 @@ public class WeatherActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        citySpinner = findViewById(R.id.citySpinner);
+        cities = loadCities(); // 加载所有城市数据
+
+        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cities);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(spinnerAdapter);
+        int position = spinnerAdapter.getPosition("宁波");
+        citySpinner.setSelection(position);
+
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCity = cities.get(position);
+                // 处理选择的城市
+                setLOCATION(convertToPinyin(selectedCity));
+                fetchWeatherData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 未选择任何城市
+            }
+        });
+
+
         weatherCards = new ArrayList<>();
         adapter = new WeatherCardAdapter(weatherCards);
         recyclerView.setAdapter(adapter);
 
         fetchWeatherData();
     }
+
+
+    private List<String> loadCities() {
+        List<String> cities = new ArrayList<>();
+
+        try {
+            InputStreamReader  inputStream = new InputStreamReader(getResources().openRawResource(R.raw.cities));
+            BufferedReader reader = new BufferedReader(inputStream);
+
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                cities.add(line);
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return cities;
+    }
+
+    public String convertToPinyin(String location) {
+        StringBuilder pinyin = new StringBuilder();
+
+        for (int i = 0; i < location.length(); i++) {
+            char c = location.charAt(i);
+
+            if (Character.isLetter(c)) {
+                pinyin.append(c);
+            }
+        }
+        return pinyin.toString().toLowerCase();
+    }
+
 
     private void fetchWeatherData() {
         String url = "https://api.seniverse.com/v3/weather/daily.json?key=" + API_KEY +
@@ -60,7 +138,8 @@ public class WeatherActivity extends AppCompatActivity {
                 "&unit=" + UNIT +
                 "&start=0" +
                 "&days=" + DAYS;
-
+ 
+        weatherCards.clear();
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -106,4 +185,7 @@ public class WeatherActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    public void setLOCATION(String LOCATION) {
+        this.LOCATION = LOCATION;
+    }
 }

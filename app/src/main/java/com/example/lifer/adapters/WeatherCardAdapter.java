@@ -56,6 +56,10 @@ public class WeatherCardAdapter extends RecyclerView.Adapter<WeatherCardAdapter.
             imageView.setImageResource(R.drawable.yin_icon);
         else if(weather.equals( "晴"))
             imageView.setImageResource(R.drawable.qingtian_icon);
+        else if(weather.equals("中雨"))
+            imageView.setImageResource(R.drawable.zhongyu_icon);
+        else if(weather.equals("雷阵雨"))
+            imageView.setImageResource(R.drawable.leizhenyu_icon);
     }
 
     @Override
