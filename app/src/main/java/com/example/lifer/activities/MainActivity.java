@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.lifer.R;
 import com.example.lifer.addressbook.addressBookMainActivity;
 import com.example.lifer.clock.ClockMainActivity;
+import com.werb.mycalendardemo.CalendarMainActivity;
 
 import cn.bproject.neteasynews.activity.NewsMainActivity;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Button weatherButton;
     private Button newsBUtton;
     private Button clockButton;
+    private Button calendarButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         weatherButton = findViewById(R.id.btn_weather);
         newsBUtton = findViewById(R.id.btn_news);
         clockButton = findViewById(R.id.btn_clock);
+        calendarButton = findViewById(R.id.btn_calendar);
         calculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 onClockButtonClick();
             }
         });
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // handle music button click
+                onCalendarButtonClick();
+            }
+        });
     }
 
     private void onCalculatorButtonClick() {
@@ -108,5 +118,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ClockMainActivity.class);
         startActivity(intent);
     }
+    private void onCalendarButtonClick() {
+        Intent intent = new Intent(MainActivity.this, CalendarMainActivity.class);
+        startActivity(intent);
+    }
+
 
 }

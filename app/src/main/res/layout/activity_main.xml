@@ -83,6 +83,16 @@
             android:background="@drawable/button_selector"
             android:text="闹钟"
             android:textSize="30dp" />
+        <Button
+            android:id="@+id/btn_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="3dp"
+            android:background="@drawable/button_selector"
+            android:text="日历"
+            android:textSize="30dp" />
     </GridLayout>
 
 
