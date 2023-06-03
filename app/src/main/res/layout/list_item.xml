@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/phone_image"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_height="80dp" />
+    <LinearLayout
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/line_text"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/list_name"
+            android:textColor="#2359F5"
+            android:paddingTop="15dp"
+            android:textSize="25dp"
+            android:text=""
+            android:layout_height="50dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/list_phone"
+            android:textColor="#9AACBB"
+            android:text=""
+            android:layout_height="30dp"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="50dp"
+        android:focusable="false"
+        android:layout_marginTop="25dp"
+        android:id="@+id/button_call"
+        android:background="@mipmap/call_pho"
+        android:layout_height="50dp"/>
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:focusable="false"
+        android:layout_marginTop="25dp"
+        android:id="@+id/button_massages"
+        android:background="@mipmap/massage_ico" />
+    <Button
+        android:layout_width="50dp"
+        android:focusable="false"
+        android:layout_marginTop="25dp"
+        android:id="@+id/button_change"
+        android:background="@mipmap/edits"
+        android:layout_height="50dp"/>
+
+
+</LinearLayout>
