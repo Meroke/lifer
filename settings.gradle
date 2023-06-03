@@ -3,8 +3,17 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
+
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
+
+
 rootProject.name = "lifer"
 include ':app'
+include ':news'
+include ':channelmanager'
+include ':library:InitActivity'
+include ':library:irecyclerview'
+

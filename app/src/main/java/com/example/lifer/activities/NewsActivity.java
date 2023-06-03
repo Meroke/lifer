@@ -1,38 +1,38 @@
 package com.example.lifer.activities;
-
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lifer.Data.NewsItem;
 import com.example.lifer.R;
-import com.example.lifer.adapters.NewsAdapter;
-
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-    NewsAPI: https://newsapi.org/docs/get-started
- */
 public class NewsActivity extends AppCompatActivity {
 
-    private static final String API_KEY = "9b69fae2ecd644c49a63ba382dd75e83";
-    private static final String NEWS_API_URL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=" + API_KEY;
+    private static final String API_KEY = "4db5e79fc03e58f5";
+    private static final String API_URL = "https://api.jisuapi.com/news/get";
+    private static final int NUM_NEWS_PER_REQUEST = 10;
 
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
-    private List<NewsItem> newsItemList;
+    private List<NewsItem> newsItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,60 +42,142 @@ public class NewsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        newsItemList = new ArrayList<>();
-        newsAdapter = new NewsAdapter(this, newsItemList);
+        newsItems = new ArrayList<>();
+        newsAdapter = new NewsAdapter(newsItems);
         recyclerView.setAdapter(newsAdapter);
 
-        fetchNews();
+        // TODO: Implement the navigation bar with channels
     }
 
-    private void fetchNews() {
+    private void fetchNews(String channel) {
         OkHttpClient client = new OkHttpClient();
 
+        String url = String.format("%s?channel=%s&start=0&num=%d&appkey=%s",
+                API_URL, channel, NUM_NEWS_PER_REQUEST, API_KEY);
         Request request = new Request.Builder()
-                .url(NEWS_API_URL)
+                .url(url)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                runOnUiThread(() -> {
-                    Toast.makeText(NewsActivity.this, "Failed to fetch news", Toast.LENGTH_SHORT).show();
-                });
+                // TODO: Handle network request failure
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseBody = response.body().string();
-                    try {
-                        JSONObject json = new JSONObject(responseBody);
-                        JSONArray articles = json.getJSONArray("articles");
+                    Gson gson = new Gson();
+                    NewsResponse newsResponse = gson.fromJson(responseBody, NewsResponse.class);
 
-                        for (int i = 0; i < articles.length(); i++) {
-                            JSONObject article = articles.getJSONObject(i);
-                            String author = article.getString("author");
-                            if(author.equals("null"))
-                                continue;
-                            String title = article.getString("title");
-                            String imageUrl = article.getString("urlToImage");
-                            String description = article.getString("description");
-                            String publishedAt = article.getString("publishedAt");
-
-                            NewsItem newsItem = new NewsItem(imageUrl,title , description, publishedAt);
-                            newsItemList.add(newsItem);
-                        }
+                    if (newsResponse != null && newsResponse.status == 0 && newsResponse.result != null) {
+                        List<NewsItem> fetchedNewsItems = newsResponse.result.list;
 
                         runOnUiThread(() -> {
+                            newsItems.clear();
+                            newsItems.addAll(fetchedNewsItems);
                             newsAdapter.notifyDataSetChanged();
                         });
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } else {
+                        // TODO: Handle invalid response
                     }
+                } else {
+                    // TODO: Handle unsuccessful response
                 }
             }
         });
+    }
+
+    private static class NewsResponse {
+        @SerializedName("status")
+        int status;
+
+        @SerializedName("msg")
+        String message;
+
+        @SerializedName("result")
+        NewsResult result;
+    }
+
+    private static class NewsResult {
+        @SerializedName("channel")
+        String channel;
+
+        @SerializedName("num")
+        int num;
+
+        @SerializedName("list")
+        List<NewsItem> list;
+    }
+
+    private static class NewsItem {
+        @SerializedName("title")
+        String title;
+
+        @SerializedName("time")
+        String time;
+
+        @SerializedName("src")
+        String source;
+
+        @SerializedName("pic")
+        String imageUrl;
+
+        @SerializedName("url")
+        String newsUrl;
+
+        @SerializedName("content")
+        String content;
+    }
+
+    private static class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
+
+        private List<NewsItem> newsItems;
+
+        public NewsAdapter(List<NewsItem> newsItems) {
+            this.newsItems = newsItems;
+        }
+
+        @NonNull
+        @Override
+        public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
+            return new NewsViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+            NewsItem newsItem = newsItems.get(position);
+            holder.bind(newsItem);
+        }
+
+        @Override
+        public int getItemCount() {
+            return newsItems.size();
+        }
+
+        public static class NewsViewHolder extends RecyclerView.ViewHolder {
+
+            private TextView titleTextView;
+            private TextView timeTextView;
+            private TextView sourceTextView;
+
+            public NewsViewHolder(@NonNull View itemView) {
+                super(itemView);
+                titleTextView = itemView.findViewById(R.id.titleTextView);
+                timeTextView = itemView.findViewById(R.id.timeTextView);
+                sourceTextView = itemView.findViewById(R.id.sourceTextView);
+            }
+
+            public void bind(NewsItem newsItem) {
+                titleTextView.setText(newsItem.title);
+                timeTextView.setText(newsItem.time);
+                sourceTextView.setText(newsItem.source);
+
+                // TODO: Load and display the image using an image loading library like Glide
+            }
+        }
     }
 }

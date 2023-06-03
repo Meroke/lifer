@@ -11,6 +11,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/channelmanager" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/InitActivity" />
+            <option value="$PROJECT_DIR$/library/irecyclerview" />
+            <option value="$PROJECT_DIR$/news" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

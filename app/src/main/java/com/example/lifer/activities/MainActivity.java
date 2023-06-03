@@ -1,5 +1,6 @@
 package com.example.lifer.activities;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lifer.R;
+import com.example.lifer.addressbook.addressBookMainActivity;
 import com.example.lifer.clock.ClockMainActivity;
+
+import cn.bproject.neteasynews.activity.NewsMainActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onContactsButtonClick() {
-        Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+        Intent intent = new Intent(MainActivity.this, addressBookMainActivity.class);
         startActivity(intent);
     }
 
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onNewsButtonClick() {
-        Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+        Intent intent = new Intent(MainActivity.this, NewsMainActivity.class);
         startActivity(intent);
     }
     private void onClockButtonClick() {
