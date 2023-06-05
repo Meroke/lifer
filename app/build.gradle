@@ -54,7 +54,7 @@ dependencies {
     implementation project(':channelmanager')
 
     implementation project(':calendar')
-
+    implementation project(':music')
 
 
 

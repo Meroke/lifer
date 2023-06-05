@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.caiji.musicplayer.activity.MusicMainActivity;
 import com.example.lifer.R;
 import com.example.lifer.addressbook.addressBookMainActivity;
 import com.example.lifer.clock.ClockMainActivity;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onMusicButtonClick() {
-        Intent intent = new Intent(MainActivity.this, MusicActivity.class);
+        Intent intent = new Intent(MainActivity.this, MusicMainActivity.class);
         startActivity(intent);
     }
     private void onWeatherButtonClick() {

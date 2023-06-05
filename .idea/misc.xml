@@ -60,6 +60,10 @@
         <entry key="..\:/Code/Andorid/lifer/channelmanager/src/main/res/layout/activity_channel_rec.xml" value="0.19927536231884058" />
         <entry key="..\:/Code/Andorid/lifer/channelmanager/src/main/res/layout/activity_channel_rec_header.xml" value="0.19927536231884058" />
         <entry key="..\:/Code/Andorid/lifer/library/InitActivity/res/layout/mediacontroller.xml" value="0.19927536231884058" />
+        <entry key="..\:/Code/Andorid/lifer/music/src/main/res/layout/activity_main.xml" value="0.15260416666666668" />
+        <entry key="..\:/Code/Andorid/lifer/music/src/main/res/layout/activity_search_result.xml" value="0.15260416666666668" />
+        <entry key="..\:/Code/Andorid/lifer/music/src/main/res/layout/activity_songs_list.xml" value="0.15260416666666668" />
+        <entry key="..\:/Code/Andorid/lifer/music/src/main/res/layout/result_list_item_view.xml" value="0.15260416666666668" />
         <entry key="..\:/Code/Andorid/lifer/news/src/main/res/layout/activity_about.xml" value="0.18541666666666667" />
         <entry key="..\:/Code/Andorid/lifer/news/src/main/res/layout/activity_channel_manager.xml" value="0.18541666666666667" />
         <entry key="..\:/Code/Andorid/lifer/news/src/main/res/layout/activity_feedback.xml" value="0.18541666666666667" />

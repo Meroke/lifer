@@ -17,4 +17,4 @@ include ':channelmanager'
 include ':library:InitActivity'
 include ':library:irecyclerview'
 include ':calendar'
-
+include ':music'
